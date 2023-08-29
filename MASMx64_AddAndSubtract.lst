@@ -1,0 +1,79 @@
+Microsoft (R) Macro Assembler (x64) Version 14.37.32822.0   08/30/23 04:39:53
+AddAndSubtract.asm					     Page 1 - 1
+
+
+				; Moves.asm  - Testing the 64-bit move operations
+
+				ExitProcess proto
+
+ 00000000			.data
+ 00000000			initval qword 0
+	   0000000000000000
+ 00000008 55			myByte byte 55h
+ 00000009 6666			myWord word 6666h
+ 0000000B 80000000		myDword dword 80000000h
+
+ 00000000			.code
+ 00000000			main proc
+				; Moving immediate values:
+ 00000000  48/ B8			mov  rax,0FFFFFFFFh
+	   00000000FFFFFFFF
+ 0000000A  48/ 83 C0 01			add  rax,1					; RAX = 100000000h
+					
+ 0000000E  48/ C7 C0			mov  rax,0FFFFh
+	   0000FFFF
+ 00000015  66| BB 0001			mov  bx,1
+ 00000019  66| 03 C3			add  ax,bx					; RAX = 0
+					
+ 0000001C  48/ C7 C0			mov  rax,0
+	   00000000
+ 00000023  BB 00000001			mov  ebx,1
+ 00000028  2B C3			sub  eax,ebx				; RAX = 00000000FFFFFFFF
+
+ 0000002A  48/ C7 C0			mov  rax,0
+	   00000000
+ 00000031  66| BB 0001			mov  bx,1
+ 00000035  66| 2B C3			sub  ax,bx					; RAX = 000000000000FFFF
+
+ 00000038  48/ C7 C0			mov  rax,0FFh
+	   000000FF
+ 0000003F  B3 01			mov  bl,1
+ 00000041  02 C3			add  al,bl					; RAX = 0
+					
+ 00000043  48/ B9			mov  rcx,OFFSET myByte
+	   0000000000000008 R
+ 0000004D  FE 01			inc  BYTE PTR [rcx]					; requires BYTE PTR
+ 0000004F  FE 09			dec  BYTE PTR [rcx]
+					
+					
+					
+ 00000051  B9 00000000			mov   ecx,0
+ 00000056  E8 00000000 E		call  ExitProcess
+ 0000005B			main endp
+
+				end
+Microsoft (R) Macro Assembler (x64) Version 14.37.32822.0   08/30/23 04:39:53
+AddAndSubtract.asm					     Symbols 2 - 1
+
+
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P 	 00000000 Length= 00000000 External
+main . . . . . . . . . . . . . .	P 	 00000000 _TEXT	Length= 0000005B Public
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+initval  . . . . . . . . . . . .	QWord	 00000000 _DATA	
+myByte . . . . . . . . . . . . .	Byte	 00000008 _DATA	
+myDword  . . . . . . . . . . . .	DWord	 0000000B _DATA	
+myWord . . . . . . . . . . . . .	Word	 00000009 _DATA	
+
+	   0 Warnings
+	   0 Errors
